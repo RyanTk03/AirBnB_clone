@@ -48,14 +48,6 @@ class HBNBCommand(cmd.Cmd):
         "Review": Review
     }
 
-    __arg_map = {
-        "all": do_all,
-        "show": do_show,
-        "destroy": do_destroy,
-        "count": do_count,
-        "update": do_update
-    }
-
     def check_args(self, args_values, checkId=False):
         """
         Check if the argument passed to the command line are correct
@@ -129,8 +121,8 @@ class HBNBCommand(cmd.Cmd):
         args_values, check_success = HBNBCommand.check_args(args, True)
         objects = storage.all()
         if check_success:
-            if "{}.{}".format(args_values[0], args_values[1]) not in
-            objects.keys():
+            if ("{}.{}".format(args_values[0], args_values[1])
+                    not in objects.keys()):
                 print("** no instance found **")
             else:
                 del objects["{}.{}".format(args_values[0], args_values[1])]
@@ -141,8 +133,8 @@ class HBNBCommand(cmd.Cmd):
         Behavior when displaying all record of a given model.
         """
         args_values = parse(args)
-        if len(args_values) > 0 and args_values[0] not in
-        HBNBCommand.__models_map.key():
+        if (len(args_values) > 0 and args_values[0]
+                not in HBNBCommand.__models_map.key()):
             print("** class doesn't exist **")
         else:
             output = []
@@ -176,8 +168,8 @@ class HBNBCommand(cmd.Cmd):
 
         if not check_success:
             return False
-        if "{}.{}".format(args_values[0], args_values[1]) not in
-        records.keys():
+        if ("{}.{}".format(args_values[0], args_values[1])
+                not in records.keys()):
             print("** no instance found **")
             return False
         if len(args_values) == 2:
