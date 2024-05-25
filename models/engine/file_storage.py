@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/python3
 """
 Defines a class FileStorage that serializes instances to a JSON file
 and deserializes JSON file to instances.
@@ -6,6 +6,7 @@ and deserializes JSON file to instances.
 
 import os
 import json
+
 
 class FileStorage:
     """A class used to serialize and deserialize data stored in JSON file"""
@@ -15,7 +16,7 @@ class FileStorage:
     def all(self):
         """Returns the dictionary __objects"""
         return FileStorage.__objects
-    
+
     def new(self, obj):
         """Sets in __objects the obj with key <obj class name>.id"""
         FileStorage.__objects[obj.__class__.__name__ + '.' + str(obj.id)] = obj
@@ -32,7 +33,8 @@ class FileStorage:
         if not os.path.exists(type(self).__file_path):
             return
         try:
-            with open(FileStorage.__file_path, mode='r', encoding="UTF-8") as f:
+            enc = "UTF-8"
+            with open(FileStorage.__file_path, mode='r', encoding=enc) as f:
                 data = json.load(f)
                 if data is None:
                     return
@@ -59,4 +61,3 @@ class FileStorage:
                     FileStorage.__objects[key] = model
         except FileNotFoundError:
             pass
-

@@ -23,9 +23,15 @@ class BaseModel:
                 del kwargs["__class__"]
             for key, value in kwargs.items():
                 if key == "created_at" or key == "updated_at":
-                    fmt = "%Y-%m-%dT%H:%M:%S.%f"
-                    setattr(self, key, datetime.strptime(value, fmt))
+                    if value is None:
+                        value = datetime.now()
+                    if type(value) == str:
+                        fmt = "%Y-%m-%dT%H:%M:%S.%f"
+                        value = datetime.strptime(value, fmt)
+                    setattr(self, key, value)
                 else:
+                    if key == "id" and value == None:
+                        value = str(uuid.uuid4())
                     setattr(self, key, value)
         else:
             self.id = str(uuid.uuid4())
@@ -37,7 +43,7 @@ class BaseModel:
         """
         Return a readable state/representation of the model
         """
-        name = self.__class__.name
+        name = self.__class__.__name__
         return "[{}] ({}) {}".format(name, self.id, self.__dict__)
 
     def save(self):

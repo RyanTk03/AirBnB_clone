@@ -115,9 +115,7 @@ class HBNBCommand(cmd.Cmd):
                 print(objects["{}.{}".format(argl[0], argl[1])])
 
     def do_destroy(self, args):
-        """
-        Behavior when deleting a record of a given id.
-        """
+        """Behavior when deleting a record of a given id."""
         args_values, check_success = HBNBCommand.check_args(args, True)
         objects = storage.all()
         if check_success:
@@ -129,9 +127,7 @@ class HBNBCommand(cmd.Cmd):
                 storage.save()
 
     def do_all(self, args):
-        """
-        Behavior when displaying all record of a given model.
-        """
+        """Behavior when displaying all record of a given model."""
         args_values = parse(args)
         if (len(args_values) > 0 and args_values[0]
                 not in HBNBCommand.__models_map.key()):
@@ -160,9 +156,7 @@ class HBNBCommand(cmd.Cmd):
             print(count)
 
     def do_update(self, arg):
-        """
-        Behavior when updating a record of a given model.
-        """
+        """Behavior when updating a record of a given model."""
         args_values, check_success = HBNBCommand.check_args(args, True)
         records = storage.all()
 
