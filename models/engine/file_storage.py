@@ -3,7 +3,6 @@
 Defines a class FileStorage that serializes instances to a JSON file
 and deserializes JSON file to instances.
 """
-
 import os
 import json
 
@@ -13,13 +12,18 @@ class FileStorage:
     __file_path = "data/file.json"
     __objects = {}
 
+    @property
+    def file_path(self):
+        return FileStorage.__file_path
+
     def all(self):
         """Returns the dictionary __objects"""
         return FileStorage.__objects
 
     def new(self, obj):
         """Sets in __objects the obj with key <obj class name>.id"""
-        FileStorage.__objects[obj.__class__.__name__ + '.' + str(obj.id)] = obj
+        class_name = obj.__class__.__name__
+        FileStorage.__objects[str(class_name) + '.' + str(obj.id)] = obj
 
     def save(self):
         """serializes __objects to the JSON file"""
@@ -30,7 +34,7 @@ class FileStorage:
 
     def reload(self):
         """deserializes the JSON file to __objects"""
-        if not os.path.exists(type(self).__file_path):
+        if not os.path.exists(FileStorage.__file_path):
             return
         try:
             enc = "UTF-8"
@@ -54,10 +58,14 @@ class FileStorage:
                     'Place': Place,
                     'Review': Review
                 }
-
                 for key, val in data.items():
                     model_name, model_id = key.split('.')
-                    model = models[model_name](**val)
-                    FileStorage.__objects[key] = model
+                    instance = models[model_name](**val)
+                    FileStorage.__objects[key] = instance
         except FileNotFoundError:
-            pass
+            FileStorage.__objects = {}
+            print("storage file not found")
+        except json.JSONDecodeError:
+            FileStorage.__objects = {}
+            print("JSON decoding error: The file may be corrupted or \
+malformed.")

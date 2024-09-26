@@ -48,7 +48,7 @@ class HBNBCommand(cmd.Cmd):
         "Review": Review
     }
 
-    def check_args(self, args_values, checkId=False):
+    def check_args(self, args, checkId=False):
         """
         Check if the argument passed to the command line are correct
         """
@@ -71,30 +71,32 @@ class HBNBCommand(cmd.Cmd):
 
     def default(self, arg):
         """Default behavior for cmd module when input is invalid"""
-        match = re.search(r"\.", arg)
-        if match is not None:
-            argl = [arg[:match.span()[0]], arg[match.span()[1]:]]
-            match = re.search(r"\((.*?)\)", argl[1])
-            if match is not None:
-                command = [argl[1][:match.span()[0]], match.group()[1:-1]]
-                if command[0] in argdict.keys():
-                    call = "{} {}".format(argl[0], command[1])
-                    return argdict[command[0]](call)
         print("*** Unknown syntax: {}".format(arg))
         return False
 
     def do_quit(self, args):
-        """Behavior when exiting the program."""
+        """
+        Exit the program.
+        """
         print("Bye")
         return True
 
     def do_EOF(self, args):
-        """EOF signal to exit the program."""
-        print("")
+        """Exit the program."""
+        print("Bye")
         return True
 
+    def do_help(self, args):
+        """
+        Display help in the console
+        """
+        super().do_help(args)
+
     def do_create(self, args):
-        """Behavior when recording a new object."""
+        """
+        Creates a new instance of BaseModel, saves it (to the JSON file) 
+        and prints the id. Ex: (hbnb) create BaseModel
+        """
         args_values, check_success = HBNBCommand.check_args(args)
         if check_success:
             new_record = HBNBCommand.__models_map[args_values[0]]()
@@ -103,19 +105,22 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, args):
         """
-        Behavior when user want do display the string representation of a
-        record of a given id.
+        Prints the string representation of an instance based on the class 
+        name and id. Ex: $ show BaseModel 1234-1234-1234.
         """
         args_values, check_success = HBNBCommand.check_args(args, True)
         objects = storage.all()
         if check_success:
-            if "{}.{}".format(argl[0], args_values[1]) not in objects.keys():
+            if "{}.{}".format(args_values[0], args_values[1]) not in objects.keys():
                 print("** no instance found **")
             else:
-                print(objects["{}.{}".format(argl[0], argl[1])])
+                print(objects["{}.{}".format(args_values[0], args_values[1])])
 
     def do_destroy(self, args):
-        """Behavior when deleting a record of a given id."""
+        """
+        Deletes an instance based on the class name and id (save the change
+        into the JSON file). Ex: $ destroy BaseModel 1234-1234-1234.
+        """
         args_values, check_success = HBNBCommand.check_args(args, True)
         objects = storage.all()
         if check_success:
@@ -127,7 +132,10 @@ class HBNBCommand(cmd.Cmd):
                 storage.save()
 
     def do_all(self, args):
-        """Behavior when displaying all record of a given model."""
+        """
+        Prints all string representation of all instances based or not on
+        the class name. Ex: $ all BaseModel or $ all.
+        """
         args_values = parse(args)
         if (len(args_values) > 0 and args_values[0]
                 not in HBNBCommand.__models_map.key()):
@@ -136,9 +144,9 @@ class HBNBCommand(cmd.Cmd):
             output = []
             records = storage.all().values()
             for rec in records:
-                if len(argl) > 0 and argl[0] == rec.__class__.__name__:
+                if len(args_values) > 0 and args_values[0] == rec.__class__.__name__:
                     output.append(rec.__str__())
-                elif len(argl) == 0:
+                elif len(args_values) == 0:
                     output.append(rec.__str__())
             print(output)
 
@@ -146,18 +154,21 @@ class HBNBCommand(cmd.Cmd):
         """
         Behavior when retrieving the number of record of a given model.
         """
-        args_values, check_success = HBNBCommand.check_args(args)
+        args_values, check_success = HBNBCommand.check_args(arg)
         if check_success:
             count = 0
             records = storage.all().values()
             for rec in records:
-                if args_values[0] == obj.__class__.__name__:
+                if args_values[0] == rec.__class__.__name__:
                     count += 1
             print(count)
 
     def do_update(self, arg):
-        """Behavior when updating a record of a given model."""
-        args_values, check_success = HBNBCommand.check_args(args, True)
+        """
+        Updates an instance based on the class name and id by adding or 
+        updating attribute (save the change into the JSON file)
+        """
+        args_values, check_success = HBNBCommand.check_args(arg, True)
         records = storage.all()
 
         if not check_success:

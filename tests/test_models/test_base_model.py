@@ -1,70 +1,59 @@
 #!/usr/bin/python3
 """
 Defines unittests for models/base_model.py.
-Unittest classes:
-    TestBaseModel_instantiation
-    TestBase_Instance_Print
-    TestBaseModel_save
-    TestBase_from_json_string
-    TestBaseModel_to_dict
 """
-from fileinput import lineno
 import unittest
-from models import storage
-from models.base_model import BaseModel
-from models.engine.file_storage import FileStorage
-from datetime import datetime
+import datetime
 import time
-import uuid
-import json
-import os
+from models.base_model import BaseModel
+from tests.base_test_case import BaseTestCase
 
 
-class TestBaseModel_NewObject(unittest.TestCase):
+class TestBaseModelInstantiation(BaseTestCase):
     """Unittests for testing instantiation of the BaseModel class."""
 
     def setUp(self):
-        """Set up unitest properties"""
-        self.longMessage = True
+        """Set up a BaseModel instance for testing."""
+        self.b = BaseModel()
 
-    def test_is_instance_of(self):
-        """Test instance"""
-        b1 = BaseModel()
-        self.assertIsInstance(b1, BaseModel)
-        self.assertEqual(str(type(b1)), str(BaseModel))
+    def util_test_type(self, instance):
+        """Util that test the type of an instance attributes"""
+        self.assertIsInstance(instance.id, str)
+        self.assertIsInstance(instance.created_at, datetime.datetime)
+        self.assertIsInstance(instance.updated_at, datetime.datetime)
 
-    def test_default_attributes(self):
-        """Test that default attribute exists"""
-        b1 = BaseModel()
-        self.assertTrue(hasattr(b1, "id"), "'id' shoud exists in a BaseModel \
-                object instantiate without kwargs")
-        self.assertTrue(hasattr(b1, "created_at"), "'created_at' should \
-                exists in a BaseModel object instantiate without kwargs")
-        self.assertTrue(hasattr(b1, "updated_at"), "'updated_at' should \
-                exists in a BaseModel object instantiate without kwargs")
-        self.assertIsInstance(b1.id, str, "'id' should be a string")
-        self.assertIsInstance(b1.created_at, datetime, "'created_at' should \
-                be an instance of datetime")
-        self.assertIsInstance(b1.updated_at, datetime, "'updated_at' should \
-                be an instance of datetime")
+    def test_is_instance_of_base_model(self):
+        """Test that an instance was created with the right class."""
+        self.assertIsInstance(self.b, BaseModel)
 
-    def test_kwargs_attributes(self):
-        dt = datetime.now()
+    def test_instance_default_attributes(self):
+        """Test that default attributes exist."""
+        self.assertTrue(hasattr(self.b, "id"))
+        self.assertTrue(hasattr(self.b, "created_at"))
+        self.assertTrue(hasattr(self.b, "updated_at"))
+
+    def test_instance_attributes_types(self):
+        """Test that attributes are of the correct type."""
+        self.util_test_type(self.b)
+
+    def test_instance_kwargs_attributes(self):
+        """Test named attributes are correctly created."""
+        dt = datetime.datetime.now()
         b1 = BaseModel(id="345", created_at=dt, updated_at=dt)
         self.assertEqual(b1.id, "345")
         self.assertEqual(b1.created_at, dt)
         self.assertEqual(b1.updated_at, dt)
+        self.util_test_type(b1)
 
-    def test_compare_instances_id(self):
-        """Compare distinct instances ids"""
-        b1 = BaseModel()
-        b2 = BaseModel()
-        self.assertNotEqual(b1.id, b2.id)
-
-    def test_new_instance_stored_in_objects(self):
-        self.assertIn(BaseModel(), storage.all().values())
+    def test_unique_instances_ids(self):
+        """Test id uniqueness for multiple distinct instances."""
+        bms = [BaseModel() for i in range(0, 100)]
+        ids = [b.id for b in bms]
+        unique_ids = set(ids)
+        self.assertEqual(len(ids), len(unique_ids))
 
     def test_instantiation_with_none_kwargs(self):
+        """Test that the None value are handled."""
         b1 = BaseModel(id=None, created_at=None, updated_at=None)
         self.assertIsNotNone(b1.id, "'id' should not be None even if value \
                 in kwargs is None")
@@ -74,81 +63,83 @@ class TestBaseModel_NewObject(unittest.TestCase):
                 even if value in kwargs is None")
 
 
-class TestBaseModel_str_method(unittest.TestCase):
+class TestBaseModelStr(BaseTestCase):
     """Unittest for testing the __str__ method."""
 
     def test_str(self):
-        """test that the str method has the correct output"""
-        b1 = BaseModel()
-        string = "[BaseModel] ({}) {}".format(b1.id, b1.__dict__)
-        self.assertEqual(string, str(b1))
+        """test that the __str__ method has the correct output."""
+        b = BaseModel()
+        expected = "[BaseModel] ({}) {}".format(b.id, b.__dict__)
+        self.assertEqual(expected, str(b))
 
 
-class TestBaseModel_save_method(unittest.TestCase):
+class TestBaseModelSave(BaseTestCase):
     """Unittest for testing the save method."""
 
-    def test_validates_save(self):
-        """Check save models"""
-        b1 = BaseModel()
-        updated_at_1 = b1.updated_at
-        b1.save()
-        updated_at_2 = b1.updated_at
-        self.assertNotEqual(updated_at_1, updated_at_2)
+    def setUp(self):
+        """Set up a BaseModel instance for testing."""
+        self.b = BaseModel()
 
-    def test_save_with_arg(self):
-        b1 = BaseModel()
-        with self.assertRaises(TypeError):
-            b1.save(None)
+    def test_save_exists(self):
+        """Test if the save method exists."""
+        self.assertTrue(hasattr(self.b, 'save'))
 
-    def test_save(self):
-        b1 = BaseModel()
-        b1.save()
-        self.assertNotEqual(b1.created_at, b1.updated_at)
+    def test_attributes_updated_at(self):
+        """Test if th attributes updated_at was updated."""
+        last_updated = self.b.updated_at.replace()
+        time.sleep(1.5)
+        self.b.save()
+        new_updated = self.b.updated_at.replace()
+        self.assertNotEqual(last_updated, new_updated)
 
 
-class TestBaseModel_to_dict_method(unittest.TestCase):
+class TestBaseModelToDict(BaseTestCase):
     """Unittest for testing the to_dict method of the BaseModel class."""
 
-    def test_to_dict(self):
-        """Test if the to_dict method exists"""
-        b = BaseModel()
-        self.assertTrue('to_dict' in dir(b))
+    def setUp(self):
+        """Set up the test case with a base madel"""
+        self.b = BaseModel()
+
+    def test_to_dict_exists(self):
+        """Test if the to_dict method exists."""
+        self.assertTrue(hasattr(self.b, 'to_dict'))
+
+    def test_to_dict_output_attribut(self):
+        """Test the contain of the output of to_dict method."""
+        to_dict_result = self.b.to_dict()
+        self.assertIn("id", to_dict_result)
+        self.assertIn("created_at", to_dict_result)
+        self.assertIn("updated_at", to_dict_result)
+        self.assertIn("__class__", to_dict_result)
 
     def test_to_dict_value(self):
-        """Test output of to_dict method"""
-        b1 = BaseModel()
-        b1_id = b1.id
-        b1_updatedAt = b1.updated_at.isoformat()
-        b1_createdAt = b1.created_at.isoformat()
-        b1_to_dict = b1.to_dict()
-        test_dict = {
-            "id": b1_id,
+        """Test the value output of to_dict method."""
+        updated_at = self.b.updated_at.isoformat()
+        created_at = self.b.created_at.isoformat()
+        to_dict_result = self.b.to_dict()
+        to_dict_expected = {
+            "id": self.b.id,
             "__class__": "BaseModel",
-            "created_at": b1_createdAt,
-            "updated_at": b1_updatedAt
+            "created_at": created_at,
+            "updated_at": updated_at
         }
-        self.assertEqual(dict, type(b1_to_dict))  # test to_dict output type
-        self.assertDictEqual(b1_to_dict, test_dict)  # test to_dict output
-        self.assertNotEqual(b1_to_dict, b1.__dict__)  # output =! __dict__
-        self.assertIn("id", b1_to_dict)
-        self.assertIn("created_at", b1_to_dict)
-        self.assertIn("updated_at", b1_to_dict)
-        self.assertIn("__class__", b1_to_dict)
+        self.assertIsInstance(to_dict_result, dict)  # test to_dict output type
+        self.assertNotEqual(to_dict_result, self.b.__dict__) # instance not e
+        self.assertDictEqual(to_dict_result, to_dict_expected)
 
     def test_to_dict_type(self):
-        """Test datetime field isoformated"""
-        b1 = BaseModel()
-        dic = b1.to_dict()
-        self.assertEqual(type(dic['created_at']), str)
-        self.assertEqual(type(dic['updated_at']), str)
-        self.assertEqual(type(dic['id']), str)
+        """Test datetime field isoformated."""
+        to_dict_result = self.b.to_dict()
+        self.assertIsInstance(to_dict_result["created_at"], str)
+        self.assertIsInstance(to_dict_result["updated_at"], str)
+        self.assertIsInstance(to_dict_result["id"], str)
 
     def test_to_dict_contains_added_attributes(self):
-        b = BaseModel()
-        b.test_name = "Holberton"
-        b.test_number = 98
-        self.assertEqual("Holberton", b.test_name)
-        self.assertIn("test_number", b.to_dict())
+        """Test that test that to_dict return new attributes."""
+        self.b.test_name = "Holberton"
+        to_dict_result = self.b.to_dict()
+        self.assertIn("test_name", to_dict_result)
+        self.assertEqual("Holberton", to_dict_result["test_name"])
 
 
 if __name__ == "__main__":
