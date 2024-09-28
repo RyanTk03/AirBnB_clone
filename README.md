@@ -4,12 +4,12 @@
 ## Concepts
 For this project, we expect you to look at these concepts:
 
-- [Python packages]("https://intranet.alxswe.com/concepts/66")
-- [AirBnB clone]("https://intranet.alxswe.com/concepts/66")
+- [Python packages](https://intranet.alxswe.com/concepts/66)
+- [AirBnB clone](https://intranet.alxswe.com/concepts/66)
 
 
 ## Background Context
-![holberton school logo]("https://s3.amazonaws.com/alx-intranet.hbtn.io/uploads/medias/2018/6/65f4a1dd9c51265f49d0.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOUSBVO6H7D%2F20240927%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240927T152052Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=74d0f4f19e7b6c8ce52486936a4c14d4658738d35ce748cceaadc5f1966d3e93")
+![holberton school logo](https://s3.amazonaws.com/alx-intranet.hbtn.io/uploads/medias/2018/6/65f4a1dd9c51265f49d0.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOUSBVO6H7D%2F20240927%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240927T152052Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=74d0f4f19e7b6c8ce52486936a4c14d4658738d35ce748cceaadc5f1966d3e93)
 ### Welcome to the AirBnB clone project!
 Before starting, please read the AirBnB concept page.
 
@@ -36,16 +36,16 @@ Do you remember the Shell? It’s exactly the same but limited to a specific use
 ### Resources
 **Read or watch:**
 
-- [cmd module]("https://docs.python.org/3.8/library/cmd.html")
-- [cmd module in depth]("https://pymotw.com/2/cmd/")
+- [cmd module](https://docs.python.org/3.8/library/cmd.html)
+- [cmd module in depth](https://pymotw.com/2/cmd/)
 - packages concept page
-- [uuid module]("https://docs.python.org/3.8/library/uuid.html")
-- [datetime]("https://docs.python.org/3.8/library/datetime.html")
-- [unittest module]("https://docs.python.org/3.8/library/unittest.html#module-unittest")
-- [args/kwargs]("https://yasoob.me/2013/08/04/args-and-kwargs-in-python-explained/")
-- [Python test cheatsheet]("https://www.pythonsheets.com/notes/python-tests.html")
-- [cmd module wiki page]("https://wiki.python.org/moin/CmdModule")
-- [python unittest]("https://realpython.com/python-testing/")
+- [uuid module](https://docs.python.org/3.8/library/uuid.html)
+- [datetime](https://docs.python.org/3.8/library/datetime.html)
+- [unittest module](https://docs.python.org/3.8/library/unittest.html#module-unittest)
+- [args/kwargs](https://yasoob.me/2013/08/04/args-and-kwargs-in-python-explained/)
+- [Python test cheatsheet](https://www.pythonsheets.com/notes/python-tests.html)
+- [cmd module wiki page](https://wiki.python.org/moin/CmdModule)
+- [python unittest](https://realpython.com/python-testing/)
 
 ## Learning Objectives
 At the end of this project, you are expected to be able to explain to anyone, without the help of Google:
@@ -86,7 +86,7 @@ At the end of this project, you are expected to be able to explain to anyone, wi
 - Allowed editors: `vi`, `vim`, `emacs`
 - All your files should end with a new line
 - All your test files should be inside a folder `tests`
-- You have to use the [unittest module]("https://docs.python.org/3.4/library/unittest.html#module-unittest")
+- You have to use the [unittest module](https://docs.python.org/3.4/library/unittest.html#module-unittest)
 - All your test files should be python files (extension: `.py`)
 - All your test files and folders should start by `test_`
 - Your file organization in the tests folder should be the same as your project
@@ -138,7 +138,7 @@ EOF  help  quit
 $
 ```
 All tests should also pass in non-interactive mode: `$ echo "python3 -m unittest discover tests" | bash`
-![project architecture]("https://s3.amazonaws.com/alx-intranet.hbtn.io/uploads/medias/2018/6/815046647d23428a14ca.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOUSBVO6H7D%2F20240927%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240927T152052Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=c734f2d0cc44276bae2936f7c05f500e0bb992cd8312342a2f4542c68ff51011")
+![project architecture](https://s3.amazonaws.com/alx-intranet.hbtn.io/uploads/medias/2018/6/815046647d23428a14ca.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOUSBVO6H7D%2F20240927%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240927T152052Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=c734f2d0cc44276bae2936f7c05f500e0bb992cd8312342a2f4542c68ff51011)
 
 ## Authors
-[Rayane TOKO]("https://github.com/RyanTk03")
+[Rayane TOKO](https://github.com/RyanTk03)
