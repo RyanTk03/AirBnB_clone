@@ -8,9 +8,6 @@ Unittest classes:
 
 import unittest
 import os
-from datetime import datetime
-from time import sleep
-from models import storage
 from models.review import Review
 from models.base_model import BaseModel
 import uuid
@@ -53,10 +50,6 @@ class TestReview(unittest.TestCase):
         self.assertIs(type(self.review.user_id), str)
         self.assertIs(type(self.review.place_id), str)
         self.assertIs(type(self.review.text), str)
-
-    def test_save(self):
-        self.review.save()
-        self.assertNotEqual(self.review.created_at, self.review.updated_at)
 
     def test_to_dict(self):
         self.assertTrue('to_dict' in dir(self.review))

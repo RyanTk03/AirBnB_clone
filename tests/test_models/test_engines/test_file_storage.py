@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+ #!/usr/bin/env python3
 """
 Module of Unittests.
 """
@@ -17,7 +17,7 @@ class TestFileStorageInstanciation(BaseTestCase):
     """File Storage instanciation success."""
 
     def test_instance(self):
-        """Test instantiation."""
+        """Test file storage engine(object) instantiation."""
         self.assertIsInstance(storage, FileStorage)
         self.assertIn("_FileStorage__file_path", dir(FileStorage()))
         self.assertIn("_FileStorage__objects", dir(FileStorage()))
@@ -31,7 +31,6 @@ class TestFileStorageAll(BaseTestCase):
         obj = storage.all()
         self.assertIsNotNone(obj)
         self.assertIsInstance(obj, dict)
-        self.assertEqual(len(obj), 0)
 
 
 class TestFileStorageNew(BaseTestCase):

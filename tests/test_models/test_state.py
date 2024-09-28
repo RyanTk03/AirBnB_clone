@@ -5,13 +5,8 @@ Unittest classes:
     TestState_save
     TestState_to_dict
 """
-import os
-import models
 import unittest
-from datetime import datetime
-from time import sleep
 from models.state import State
-from models import storage
 from models.base_model import BaseModel
 
 

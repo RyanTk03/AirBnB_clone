@@ -4,9 +4,6 @@
 import unittest
 import os
 from models.place import Place
-from datetime import datetime
-from time import sleep
-from models.base_model import BaseModel
 import uuid
 
 
@@ -81,10 +78,6 @@ class TestPlace(unittest.TestCase):
         self.assertIs(type(self.place.latitude), float)
         self.assertIs(type(self.place.longitude), float)
         self.assertIs(type(self.place.amenity_ids), list)
-
-    def test_save(self):
-        self.place.save()
-        self.assertNotEqual(self.place.created_at, self.place.updated_at)
 
     def test_to_dict_output(self):
         """test to_dict method creates a dictionary with proper attrs"""

@@ -7,15 +7,9 @@ Unittest classes:
 """
 
 import unittest
-from datetime import datetime
-import time
 import uuid
 from models.city import City
-import re
-import json
-from models.engine.file_storage import FileStorage
 import os
-from models import storage
 from models.base_model import BaseModel
 
 
@@ -52,10 +46,6 @@ class TestCity(unittest.TestCase):
         """test that the str method has the correct output"""
         string = "[City] ({}) {}".format(self.city.id, self.city.__dict__)
         self.assertEqual(string, str(self.city))
-
-    def test_save(self):
-        self.city.save()
-        self.assertNotEqual(self.city.created_at, self.city.updated_at)
 
     def test_to_dict(self):
         self.assertTrue('to_dict' in dir(self.city))

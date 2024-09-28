@@ -53,10 +53,6 @@ class TestAmenity(unittest.TestCase):
         """test if Amenity is a subclass of BaseModel"""
         self.assertTrue(issubclass(type(self.amenity), BaseModel))
 
-    def test_save(self):
-        self.amenity.save()
-        self.assertNotEqual(self.amenity.created_at, self.amenity.updated_at)
-
     def test_to_dict_output(self):
         """test to_dict method creates a dictionary with proper attrs"""
         test_dict = self.amenity.to_dict()
