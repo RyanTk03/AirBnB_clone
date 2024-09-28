@@ -138,4 +138,7 @@ EOF  help  quit
 $
 ```
 All tests should also pass in non-interactive mode: `$ echo "python3 -m unittest discover tests" | bash`
-[project architecture]("https://s3.amazonaws.com/alx-intranet.hbtn.io/uploads/medias/2018/6/815046647d23428a14ca.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOUSBVO6H7D%2F20240927%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240927T152052Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=c734f2d0cc44276bae2936f7c05f500e0bb992cd8312342a2f4542c68ff51011")
+![project architecture]("https://s3.amazonaws.com/alx-intranet.hbtn.io/uploads/medias/2018/6/815046647d23428a14ca.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOUSBVO6H7D%2F20240927%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240927T152052Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=c734f2d0cc44276bae2936f7c05f500e0bb992cd8312342a2f4542c68ff51011")
+
+## Authors
+[Rayane TOKO]("https://github.com/RyanTk03")
