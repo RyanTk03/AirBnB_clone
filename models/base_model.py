@@ -25,13 +25,14 @@ class BaseModel:
                 if key == "created_at" or key == "updated_at":
                     if value is None:
                         value = datetime.datetime.now()
-                    if type(value) == str:
+                    if type(value) is str:
                         fmt = "%Y-%m-%dT%H:%M:%S.%f"
                         value = datetime.datetime.strptime(value, fmt)
                     setattr(self, key, value)
                 else:
-                    if (key == "id" and value == None) or (key == "id" and
-                    type(value) != str):
+                    if (key == "id" and value is None) or (key == "id" and
+                                                           type(value) is not
+                                                           str):
                         value = str(uuid.uuid4())
                     setattr(self, key, value)
         else:
