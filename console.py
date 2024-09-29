@@ -37,13 +37,17 @@ class HBNBCommand(cmd.Cmd):
         if has_bracket is not None:
             has_curly_bracket = re.search(r"\{(.*?)\}", line)
             if has_curly_bracket is None:
-                r1 = line[:has_bracket.span()[0]]
-                r1 = r1.replace('.', ' ').split()
-                result = ' '.join([r1[1], r1[0]])
+                parsed_list = line[:has_bracket.span()[1] - 1]
+                parsed_list = split(parsed_list.replace('.', ' ').
+                                    replace('(', ' '))
+                parsed_list[0], parsed_list[1] = parsed_list[1], parsed_list[0]
+                result = ' '.join(parsed_list)
             else:
-                r1 = line[:has_curly_bracket.span()[0]]
-                r1 = split(r1.replace('.', ' ').replace('(', ' ').strip(', '))
-                result = ' '.join([r1[1], r1[0], r1[2]])
+                parsed_list = line[:has_curly_bracket.span()[0]]
+                parsed_list = split(parsed_list.replace('.', ' ').
+                                    replace('(', ' ').strip(', '))
+                parsed_list[0], parsed_list[1] = parsed_list[1], parsed_list[0]
+                result = ' '.join(parsed_list)
                 s_dict = split(has_curly_bracket.group(1).replace(':', ' ').
                                replace(',', ' '))
                 result = result + ' ' + ' '.join(s_dict)
@@ -57,7 +61,7 @@ class HBNBCommand(cmd.Cmd):
         error = None
         if len(argv) == 0 and command != 'all':
             error = "** class name missing **"
-        elif argv[0] not in HBNBCommand.__models_map.keys():
+        elif len(argv) > 0 and argv[0] not in self.__models_map.keys():
             error = "** class doesn't exist **"
         elif len(argv) == 1 and command not in ['all', 'create', 'count']:
             error = "** instance id missing **"
