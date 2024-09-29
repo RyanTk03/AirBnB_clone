@@ -5,13 +5,6 @@ import unittest
 import os
 from models.amenity import Amenity
 from models.base_model import BaseModel
-import uuid
-import datetime
-import time
-import re
-import json
-from models.engine.file_storage import FileStorage
-from models import storage
 
 
 class TestAmenity(unittest.TestCase):

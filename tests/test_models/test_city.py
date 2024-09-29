@@ -1,9 +1,5 @@
 #!/usr/bin/python3
 """Unittest module for the City Class.
-Unittest classes:
-    TestCity_instantiation
-    TestCity_save
-    TestCity_to_dict
 """
 
 import unittest

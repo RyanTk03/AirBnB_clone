@@ -194,8 +194,6 @@ class HBNBCommand(cmd.Cmd):
         argv = parse_result['argv']
         error = parse_result['error']
         records = storage.all()
-        print(args)
-        print(argv)
 
         if error is None:
             if ("{}.{}".format(argv[0], argv[1]) not in records.keys()):
